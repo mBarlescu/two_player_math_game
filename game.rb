@@ -58,6 +58,12 @@ require_relative 'player'
 
     end
 
+    def check_game
+      if @player1.life == 0 || @player2.life == 0
+        puts "Game Over"
+        exit(0)
+      end
+    end
 
 
   end
@@ -67,4 +73,11 @@ require_relative 'player'
   puts "Player 2, enter name: "
   player2 = Player.new(STDIN.gets.chomp)
   game1 = Game.new(player1, player2)
-  game1.player1_turn
+  while game1.player1.life != 0 || game1.player2.life != 0
+    game1.player1_turn
+    game1.check_game
+    puts "~~~~~~~~~~NEW TURN~~~~~~~~~~"
+    game1.player2_turn
+    game1.check_game
+    puts "~~~~~~~~~~NEW TURN~~~~~~~~~~"
+  end
