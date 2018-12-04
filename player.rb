@@ -13,6 +13,7 @@ class Player
   def initialize(name)
     @name = name
     @life = 3
+    @turn = true
   end
 
   def lose_life

@@ -29,13 +29,36 @@ require_relative 'player'
       answer.to_i
       if answer == eval("#{@num1} #{@sign} #{@num2}").to_s
        puts "good!"
+       puts "#{@player1.name}: #{@player1.life} || #{player2.name}: #{player2.life}"
      else
       puts "wrong, you lose one life"
       @player2.life -= 1
-      puts @player2.life
+      puts "#{@player1.name}: #{@player1.life} || #{player2.name}: #{player2.life}"
       end
 
     end
+
+    def player2_turn
+      @sign = math_question
+      answer = 0
+      print "#{@player2.name}, pick a number between 1-10: "
+      @num1 = STDIN.gets.chomp
+      print "#{@player2.name}, pick another number between 1-10: "
+      @num2 = STDIN.gets.chomp
+      print "#{@player1.name}, what is #{@num1} #{@sign} #{@num2}? "
+      answer = STDIN.gets.chomp
+      answer.to_i
+      if answer == eval("#{@num1} #{@sign} #{@num2}").to_s
+       puts "good!"
+     else
+      puts "wrong, you lose one life"
+      @player1.life -= 1
+      puts "#{@player1.name}: #{@player1.life} || #{player2.name}: #{player2.life}"
+      end
+
+    end
+
+
 
   end
 
