@@ -1,46 +1,47 @@
 require_relative 'player'
 
   class Game
-    attr_accessor :num1, :num2, :player1, :player2
+    attr_accessor :num1, :num2, :player1, :player2, :sign
 
-    def initialize
+    def initialize (player1, player2)
       @num1 = num1
       @num2 = num2
       @player1 = player1
       @player2 = player2
-      question = ["#{num1} + #{num2}?", "#{num1} - #{num2}?", "#{num1} * #{num2}?"]
+      @question = [:+, :-, :*]
+      @sign = "+"
     end
 
     def math_question
-      addition = "#{num1} + #{num2}?"
-      subtraction = "#{num1} - #{num2}?"
-      multiplication = "#{num1} * #{num2}?"
-    end
+      @question.sample
 
-    def create_player
-      print "player 1, enter name: "
-      player1 = Player.new(STDIN.gets.chomp)
-      puts "#{player1.name} has joined the game"
-      @player1 = "#{player1.name}"
-      print "player 2, enter name: "
-      player2 = Player.new(STDIN.gets.chomp)
-      puts "#{player2.name} has joined the game"
-      @player2 = "#{player2.name}"
     end
 
     def player1_turn
-      print "#{@player1}, pick a number between 1-10: "
+      @sign = math_question
+      answer = 0
+      print "#{@player1.name}, pick a number between 1-10: "
       @num1 = STDIN.gets.chomp
-      print "#{@player1}, pick another number between 1-10: "
+      print "#{@player1.name}, pick another number between 1-10: "
       @num2 = STDIN.gets.chomp
-      print "#{@player}"
+      print "#{@player2.name}, what is #{@num1} #{@sign} #{@num2}? "
+      answer = STDIN.gets.chomp
+      answer.to_i
+      if answer == eval("#{@num1} #{@sign} #{@num2}").to_s
+       puts "good!"
+     else
+      puts "wrong, you lose one life"
+      @player2.life -= 1
+      puts @player2.life
+      end
+
     end
 
   end
 
-  game1 = Game.new
-  game1.create_player
-  puts game1.player1
+  puts "Player 1, enter name: "
+  player1 = Player.new(STDIN.gets.chomp)
+  puts "Player 2, enter name: "
+  player2 = Player.new(STDIN.gets.chomp)
+  game1 = Game.new(player1, player2)
   game1.player1_turn
-  puts game1.num1
-  puts game1.num2
